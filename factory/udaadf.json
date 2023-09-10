@@ -1,0 +1,9 @@
+{
+	"name": "udaadf",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "12bdafc5-30b1-434f-8892-f1f375712a8a",
+		"tenantId": "b4399c04-c904-4997-9623-59392992d7fe"
+	}
+}

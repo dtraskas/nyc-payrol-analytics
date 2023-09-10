@@ -1,0 +1,41 @@
+{
+	"name": "LOAD_SQLDB_NYC_PAYROLL_TO_SYN",
+	"properties": {
+		"activities": [
+			{
+				"name": "DF_SQLDB_PAYROLL_TO_SYN_PAYROLL",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_SQLDB_PAYROLL_TO_SYN_PAYROLL",
+						"type": "DataFlowReference"
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "AzureDataLakeGen2",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "datalake/dirstaging"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-09-08T22:58:23Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

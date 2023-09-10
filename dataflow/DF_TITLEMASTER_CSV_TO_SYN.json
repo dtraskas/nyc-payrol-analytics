@@ -1,0 +1,52 @@
+{
+	"name": "DF_TITLEMASTER_CSV_TO_SYN",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "LAKE_DS_TitleMaster",
+						"type": "DatasetReference"
+					},
+					"name": "LAKESRC"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SYN_DS_NYC_Payroll_TITLE_MD",
+						"type": "DatasetReference"
+					},
+					"name": "SYNDEST"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          TitleCode as string,",
+				"          TitleDescription as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> LAKESRC",
+				"LAKESRC sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          TitleCode as string,",
+				"          TitleDescription as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> SYNDEST"
+			]
+		}
+	}
+}

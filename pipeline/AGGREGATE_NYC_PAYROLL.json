@@ -1,0 +1,51 @@
+{
+	"name": "AGGREGATE_NYC_PAYROLL",
+	"properties": {
+		"activities": [
+			{
+				"name": "DF_AGGREGATE_NYC_PAYROLL",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_AGGREGATE_NYC_PAYROLL",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Fiscal_Year": {
+								"value": "@pipeline().parameters.FiscalYear",
+								"type": "Expression"
+							}
+						}
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "AzureDataLakeGen2",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "datalake/dirstaging"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"parameters": {
+			"FiscalYear": {
+				"type": "int",
+				"defaultValue": 2020
+			}
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,54 @@
+{
+	"name": "DF_EMPMASTER_CSV_TO_SYN",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "LAKE_DS_EmpMaster",
+						"type": "DatasetReference"
+					},
+					"name": "LAKESRC"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SYN_DS_NYC_Payroll_EMP_MD",
+						"type": "DatasetReference"
+					},
+					"name": "SYNDEST"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          EmployeeID as string,",
+				"          LastName as string,",
+				"          FirstName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> LAKESRC",
+				"LAKESRC sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EmployeeID as string,",
+				"          LastName as string,",
+				"          FirstName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> SYNDEST"
+			]
+		}
+	}
+}
